@@ -7,7 +7,7 @@
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
  *
- *   http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
@@ -16,13 +16,14 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.datatorrent.contrib.parser;
+package com.datatorrent.contrib.parser.log;
 
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
@@ -85,7 +86,7 @@ public class LogSchemaDetails
     JSONObject jsonObject = new JSONObject(json);
     JSONArray fieldArray = jsonObject.getJSONArray("fields");
 
-    for(int i = 0; i < fieldArray.length(); i++) {
+    for (int i = 0; i < fieldArray.length(); i++) {
       JSONObject obj = fieldArray.getJSONObject(i);
       Field field = new Field(obj.getString("field"), obj.getString("regex"));
       this.fields.add(field);
@@ -99,7 +100,7 @@ public class LogSchemaDetails
   public void createPattern()
   {
     StringBuffer pattern = new StringBuffer();
-    for(Field field: this.getFields()) {
+    for (Field field : this.getFields()) {
       pattern.append(field.getRegex()).append(" ");
     }
     logger.info("Created pattern for parsing the log {}", pattern.toString().trim());
@@ -120,8 +121,8 @@ public class LogSchemaDetails
       int count = m.groupCount();
       if (m.find()) {
         int i = 1;
-        logObject  = new JSONObject();
-        for(String field: this.getFieldNames()) {
+        logObject = new JSONObject();
+        for (String field : this.getFieldNames()) {
           if (i > count) {
             break;
           }
@@ -180,7 +181,6 @@ public class LogSchemaDetails
      */
     private String regex;
 
-
     public Field(String name, String regex)
     {
       this.name = name;
@@ -226,7 +226,7 @@ public class LogSchemaDetails
     @Override
     public String toString()
     {
-      return "Fields [name=" + name + ", regex=" + regex +"]";
+      return "Fields [name=" + name + ", regex=" + regex + "]";
     }
   }
 
